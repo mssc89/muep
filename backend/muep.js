@@ -13,12 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors())
 
-app.get('/', (req, res) => {
-  res.send('xD');
+app.get('/api/', (req, res) => {
+  res.send('');
 });
 
 //studia w zakresie (kierunki)
-app.post('/getDeps', (req, res) => {
+app.post('/api/getDeps', (req, res) => {
   let type = req.body.type;
 
   axios.post('https://app.ue.poznan.pl/Schedule/Home/GetDepartmentsNameForStudiesType',{type:type})
@@ -41,7 +41,7 @@ app.post('/getDeps', (req, res) => {
 });
 
 //lata studiów
-app.post('/getYears', (req, res) => {
+app.post('/api/getYears', (req, res) => {
   let type = req.body.type;
   let dep = req.body.department;
   let cyc = req.body.cycle;
@@ -64,7 +64,7 @@ app.post('/getYears', (req, res) => {
 });
 
 //grupy rektorskie
-app.post('/getGroups', (req, res) => {
+app.post('/api/getGroups', (req, res) => {
   let type = req.body.type;
   let dep = req.body.department;
   let cyc = req.body.cycle;
@@ -88,7 +88,7 @@ app.post('/getGroups', (req, res) => {
 });
 
 //plan zajęć
-app.post('/schedule', (req, res) => {
+app.post('/api/schedule', (req, res) => {
   let type = req.body.type;
   let dep = req.body.department;
   let cyc = req.body.cycle;
@@ -141,7 +141,7 @@ app.post('/schedule', (req, res) => {
 });
 
 //orion
-app.post('/spnjo2', (req, res) => {
+app.post('/api/spnjo2', (req, res) => {
   let album = req.body.album;
 
   //orion uywa form-data więc trzeba robić fikoły by działało
@@ -164,7 +164,7 @@ app.post('/spnjo2', (req, res) => {
 });
 
 //hornet [*]
-app.post('/spnjo', (req, res) => {
+app.post('/api/spnjo', (req, res) => {
   let album = req.body.album;
 
   //zdobądź wewnętrzne dla spnjo id uzytkownika, parametry przerób na urlencoded

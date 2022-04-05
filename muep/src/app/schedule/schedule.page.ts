@@ -35,7 +35,7 @@ export class SchedulePage implements OnInit {
         if (data.status == 'ok') {
           this.loadEvents(data.message);
         }
-      });
+    });
   }
 
   calendar = {
@@ -64,7 +64,7 @@ export class SchedulePage implements OnInit {
     }
   };
 
-  //łądowanie i konwersja danych
+  //ładowanie i konwersja danych
   loadEvents(data) {
     let events = []; //tablica wydarzeń wstawiana do komponentu kalendarza
     let date = new Date(); //dzisiejsza data
@@ -140,5 +140,29 @@ export class SchedulePage implements OnInit {
 
   today() {
     this.calendar.currentDate = new Date();
+  }
+
+  //zmiana dnia w widoku dnia
+  //user moze przewijac tylko w zakresie aktualnego tygodnia
+  changeDay(mode){
+    if(mode == "next"){
+      let wczoraj = this.calendar.currentDate;
+      if(wczoraj.getDay() != 0){
+        wczoraj.setDate(wczoraj.getDate()+1);
+        this.calendar.currentDate = new Date(wczoraj);
+      }
+    }
+    else if(mode == "prev"){
+      let jutro = this.calendar.currentDate;
+      if(jutro.getDay() != 1){
+        jutro.setDate(jutro.getDate()-1);
+        this.calendar.currentDate = new Date(jutro);
+      }
+    }
+  }
+
+  //ustawianie limitu przewijania w widoku dniowym
+  //aka user moze przewijac tylko w zakresie aktualnego tygodnia
+  swipeGuard(){
   }
 }

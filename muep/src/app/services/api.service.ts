@@ -10,7 +10,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  rootURL = 'https://muep.app';
+  rootURL = 'https://muep.app/api';
   //rootURL = 'http://localhost:8080';
 
   getSchedule(type: Number, department: Number, cycle: Number, year: Number, group: Number): Observable<any> {

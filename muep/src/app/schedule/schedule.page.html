@@ -23,7 +23,19 @@
     </ion-segment-button>
   </ion-segment>
 
-  <h2>{{viewTitle}}</h2>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" *ngIf="calendar.mode === 'day'" (click)="changeDay('prev')" [disabled]="calendar.currentDate.getDay() === 1">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{viewTitle}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button fill="clear" *ngIf="calendar.mode === 'day'" (click)="changeDay('next')" [disabled]="calendar.currentDate.getDay() === 0">
+        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 
   <!--Tmplate do wyświetlania danych o evencie w widoku dnia-->
   <ng-template #DayEventTemplate let-displayEvent="displayEvent">
@@ -64,7 +76,8 @@
             [weekviewNormalEventTemplate]="WeekEventTemplate"
             noEventsLabel="Brak zajęć"
             [dateFormatter]="calendar.dateFormatter"
-            [lockSwipes]="true">
+            [lockSwipes]="true"
+            [startingDayWeek]="1">
   </calendar>
 
   <app-ad></app-ad>
