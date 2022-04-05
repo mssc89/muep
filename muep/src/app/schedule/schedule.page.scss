@@ -1,0 +1,42 @@
+ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
+.calendar-event-inner{
+  overflow: hidden;
+  background-color: #428aff;
+  color: white;
+  height: 100%;
+  width: 100%;
+  padding: 2px;
+  line-height: 15px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  height:50px;
+}
+
+.dayview-normal-event-table > tr{
+  height:50px;
+}
+
+strong {
+  width: 100%;
+  font-size: 24px;
+}
+
+ion-segment {
+  margin-bottom: 20px;
+}
+
+ion-content {
+  text-align:center;
+}
+
+//wyłączamy scrolla bo komponent kalendarza jest troche zepsuty
+ion-content {
+  --overflow: hidden;
+}

@@ -1,0 +1,6 @@
+{
+	"appId": "com.mssc.muep",
+	"appName": "mUEP",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

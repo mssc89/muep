@@ -1,0 +1,7 @@
+{
+  "name": "muep",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

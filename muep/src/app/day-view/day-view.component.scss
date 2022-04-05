@@ -1,0 +1,22 @@
+table, th, td {
+  border: 1px solid;
+}
+
+table {
+  border-collapse: collapse;
+  width:100%;
+}
+
+.height-android {
+  height: calc(100% - 68px);
+}
+
+.height-ios {
+  height: calc(100% - 103px);
+}
+
+.godzina {
+  width:15%;
+  vertical-align: top;
+  height:80px;
+}

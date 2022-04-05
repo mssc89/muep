@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cześć!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-start ion-padding-end">
+  <p>
+    Dziękujemy za pobranie aplikacji!
+  </p>
+
+  <p>
+    Przed wyświetleniem planu zajęć potrzebujemy kilku danych o tobie:
+  </p>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="type" (ionChange)="updateDepsList()">
+      <ion-list-header>
+        <ion-label>Forma studiów</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Stacjonarne</ion-label>
+        <ion-radio slot="start" value="1"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Niestacjonarne</ion-label>
+        <ion-radio slot="start" value="2"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="cycle" (ionChange)="updateDepsList()">
+      <ion-list-header>
+        <ion-label>Stopień studiów</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Pierwszy stopień</ion-label>
+        <ion-radio slot="start" value="1"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Drugi stopień</ion-label>
+        <ion-radio slot="start" value="2"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        Studia w zakresie
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-select [(ngModel)]="department" (ionChange)="updateYearList()" placeholder="Zakres" [disabled]="!cycle || !type">
+        <ion-select-option *ngFor="let depp of deps" [value]="depp.id">{{depp.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        Rok studiów
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-select [(ngModel)]="year" (ionChange)="updateGroupList()" placeholder="Rok" [disabled]="!cycle || !type || !department">
+        <ion-select-option *ngFor="let yearr of years" [value]="yearr.id">{{yearr.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        Grupa
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-select [(ngModel)]="group" placeholder="Grupa" [disabled]="!cycle || !type || !department || !year">
+        <ion-select-option *ngFor="let groupp of groups" [value]="groupp.id">{{groupp.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" (click)="done()" [disabled]="!group || !year || !department || !cycle || !type">Dalej</ion-button>
+
+</ion-content>
