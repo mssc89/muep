@@ -19,14 +19,9 @@
         <ion-label>Forma studiów</ion-label>
       </ion-list-header>
 
-      <ion-item>
-        <ion-label>Stacjonarne</ion-label>
-        <ion-radio slot="start" value="1"></ion-radio>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Niestacjonarne</ion-label>
-        <ion-radio slot="start" value="2"></ion-radio>
+      <ion-item *ngFor="let typee of types">
+        <ion-label>{{typee.name}}</ion-label>
+        <ion-radio slot="start" [value]="typee.id"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>
@@ -37,27 +32,20 @@
         <ion-label>Stopień studiów</ion-label>
       </ion-list-header>
 
-      <ion-item>
-        <ion-label>Pierwszy stopień</ion-label>
-        <ion-radio slot="start" value="1"></ion-radio>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Drugi stopień</ion-label>
-        <ion-radio slot="start" value="2"></ion-radio>
+      <ion-item *ngFor="let cyclee of cycles">
+        <ion-label>{{cyclee.name}}</ion-label>
+        <ion-radio slot="start" [value]="cyclee.id"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>
 
   <ion-list>
     <ion-list-header>
-      <ion-label>
-        Studia w zakresie
-      </ion-label>
+      <ion-label>Studia w zakresie</ion-label>
     </ion-list-header>
 
     <ion-item>
-      <ion-select [(ngModel)]="department" (ionChange)="updateYearList()" placeholder="Zakres" [disabled]="!cycle || !type">
+      <ion-select [interfaceOptions]="{header:'Studia w zakresie'}" interface="alert" [(ngModel)]="department" (ionChange)="updateYearList()" placeholder="Zakres" [disabled]="!cycle || !type">
         <ion-select-option *ngFor="let depp of deps" [value]="depp.id">{{depp.name}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -65,13 +53,11 @@
 
   <ion-list>
     <ion-list-header>
-      <ion-label>
-        Rok studiów
-      </ion-label>
+      <ion-label>Rok studiów</ion-label>
     </ion-list-header>
 
     <ion-item>
-      <ion-select [(ngModel)]="year" (ionChange)="updateGroupList()" placeholder="Rok" [disabled]="!cycle || !type || !department">
+      <ion-select [interfaceOptions]="{header:'Rok studiów'}" interface="alert" [(ngModel)]="year" (ionChange)="updateGroupList()" placeholder="Rok" [disabled]="!cycle || !type || !department">
         <ion-select-option *ngFor="let yearr of years" [value]="yearr.id">{{yearr.name}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -79,14 +65,12 @@
 
   <ion-list>
     <ion-list-header>
-      <ion-label>
-        Grupa
-      </ion-label>
+      <ion-label>Grupa</ion-label>
     </ion-list-header>
 
     <ion-item>
-      <ion-select [(ngModel)]="group" placeholder="Grupa" [disabled]="!cycle || !type || !department || !year">
-        <ion-select-option *ngFor="let groupp of groups" [value]="groupp.id">{{groupp.name}}</ion-select-option>
+      <ion-select [interfaceOptions]="{header:'Grupa'}" interface="alert" [(ngModel)]="group" placeholder="Grupa" [disabled]="!cycle || !type || !department || !year">
+        <ion-select-option *ngFor="let groupp of groups" [value]="groupp.id">{{groupp.nameShort}}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>

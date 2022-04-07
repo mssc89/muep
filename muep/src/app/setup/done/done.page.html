@@ -6,6 +6,46 @@
 
 <ion-content class="ion-padding-start ion-padding-end">
   <p>Możesz już korzystać z aplikacji ;)</p>
+
+  <ion-list>
+    <ion-list-header>Twoje dane:</ion-list-header>
+    <ion-item>
+      <ion-label>
+        Forma studiów:
+        <br>
+        {{ scheduleData.values.type.name }}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Stopień studiów:
+        <br>
+        {{ scheduleData.values.cycle.name }}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Studia w zakresie:
+        <br>
+        {{ scheduleData.values.department.name }}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Rok studiów:
+        <br>
+        {{ scheduleData.values.year.name }}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Grupa:
+        <br>
+        {{ scheduleData.values.group.name }}
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
 </ion-content>
 
 <ion-footer class="ion-padding-start ion-padding-end">

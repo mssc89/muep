@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScheduleData } from 'src/app/models/schedule-data';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-done',
@@ -8,12 +10,12 @@ import { Router } from '@angular/router';
 })
 export class DonePage implements OnInit {
 
-  data: Array<any>;
+  scheduleData: ScheduleData;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private storage: StorageService) { }
 
   ngOnInit() {
-    this.data = JSON.parse(localStorage.getItem("schedules"))[0].values;
+    this.scheduleData = this.storage.getScheduleData();
   }
 
   done(){
