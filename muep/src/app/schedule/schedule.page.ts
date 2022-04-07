@@ -6,6 +6,7 @@ import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import { ApiResponse } from '../models/response';
+import { StorageService } from '../services/storage.service';
 
 registerLocaleData(localePl);
 
@@ -22,15 +23,16 @@ export class SchedulePage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private api: ApiService
+    private api: ApiService,
+    private storage: StorageService
   ) {}
 
   ngOnInit() {
-    this.scheduleData = JSON.parse(localStorage.getItem("schedules"))[0].values;
+    this.scheduleData = this.storage.getScheduleData();
 
     //pobieranie danych z API
     this.api
-      .getSchedule(this.scheduleData?.type, this.scheduleData.department, this.scheduleData.cycle, this.scheduleData.year, this.scheduleData.group)
+      .getSchedule(this.scheduleData.values.type.id, this.scheduleData.values.department.id, this.scheduleData.values.cycle.id, this.scheduleData.values.year.id, this.scheduleData.values.group.id)
       .subscribe((data: ApiResponse) => {
         if (data.status == 'ok') {
           this.loadEvents(data.message);
