@@ -49,8 +49,11 @@ export class SchedulePage implements OnInit {
     dateFormatter: {
       //formatowanie nagłówku dnia: dodawanie duzej litery, dzień i miesiąc
       formatDayViewTitle: function(date: Date) {
+        let miesiace = [
+          "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"
+        ]
         let dzien = date.toLocaleDateString('pl-PL', { weekday: 'long' });
-        return dzien.charAt(0).toUpperCase() + dzien.slice(1) + ", " + date.getDate() + " " + date.toLocaleDateString('pl-PL', { month: 'long' });;
+        return dzien.charAt(0).toUpperCase() + dzien.slice(1) + ", " + date.getDate() + " " + miesiace[date.getMonth()];
       },
       //formatowanie nagłówku tygodnia: miesiące w odpowiedniej odmianie/przypadku oraz numer tygodnia
       formatWeekViewTitle: function(date: Date) {

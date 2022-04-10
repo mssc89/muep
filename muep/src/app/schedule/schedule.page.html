@@ -45,7 +45,7 @@
 
   <!--Template do wyświetlania danych o evencie w widoku tygodnia-->
   <ng-template #WeekEventTemplate let-displayEvent="displayEvent">
-    <div class="calendar-event-inner" style="font-size:8px;">{{displayEvent.event.lesson}}</div>
+    <div *ngIf="!displayEvent.event.noClasses" class="calendar-event-inner" style="font-size:8px;">{{displayEvent.event.lesson}}</div>
   </ng-template>
 
   <!--<ng-template #MonthDetailTemplate let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
