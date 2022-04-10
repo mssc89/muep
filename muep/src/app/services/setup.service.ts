@@ -8,7 +8,7 @@ export class SetupService {
   constructor() { }
 
   checkSetup(){
-    if (localStorage.getItem("setup") === null) {
+    if (localStorage.getItem("schedules") === null) {
       return false;
     }
     else{

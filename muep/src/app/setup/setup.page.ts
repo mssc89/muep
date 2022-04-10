@@ -32,9 +32,6 @@ export class SetupPage implements OnInit {
   constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
-    if(localStorage.hasOwnProperty('schedules')){
-      this.router.navigate(['/schedule'])
-    }
   }
 
   updateDepsList(){

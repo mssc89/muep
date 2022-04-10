@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { SetupGuard } from './guards/setup.guard';
 
 const routes: Routes = [
   {
-    path: 'schedule',
-    loadChildren: () => import('./schedule/schedule.module').then( m => m.SchedulePageModule)
+    path: '',
+    loadChildren: () => import('./schedule/schedule.module').then( m => m.SchedulePageModule),
+    canActivate: [SetupGuard]
   },
   {
     path: 'setup',
@@ -14,7 +16,7 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
   },
-  { path: '**', redirectTo: 'setup' },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
