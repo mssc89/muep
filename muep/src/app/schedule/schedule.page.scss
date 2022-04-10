@@ -30,8 +30,3 @@ ion-segment {
 ion-content {
   text-align:center;
 }
-
-//wyłączamy scrolla bo komponent kalendarza jest troche zepsuty
-ion-content {
-  --overflow: hidden;
-}
