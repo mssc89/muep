@@ -100,6 +100,7 @@ export class SchedulePage implements OnInit {
 
             //dodaj do tablicy wydarzeń
             events.push({
+              noClasses: false,
               time: clas.time,
               lesson: clas.lesson,
               place: clas.place,
@@ -110,8 +111,28 @@ export class SchedulePage implements OnInit {
               allDay: false,
             });
           }
+
+          //jeśli danego dnia nie ma zajęć
+          if(day.classes.length == 0){
+            let start = new Date(date.getTime());
+            start.setHours(0);
+            start.setMinutes(0);
+
+            let end = new Date(date.getTime());
+            end.setHours(20);
+            end.setMinutes(58);
+
+            events.push({
+              noClasses: true,
+              title:"",
+              startTime: start,
+              endTime: end,
+              allDay: false,
+            });
+          }
         }
       }
+
       //przewiń do kolejnego dnia
       date.setDate(date.getDate() + 1);
     }

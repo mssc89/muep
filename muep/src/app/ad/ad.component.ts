@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { BrowserTestingModule } from '@angular/platform-browser/testing';
 
 import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, BannerAdPluginEvents, AdMobBannerSize } from '@capacitor-community/admob';
 

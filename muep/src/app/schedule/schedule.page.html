@@ -37,12 +37,13 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <!--Tmplate do wyświetlania danych o evencie w widoku dnia-->
+  <!--Template do wyświetlania danych o evencie w widoku dnia-->
   <ng-template #DayEventTemplate let-displayEvent="displayEvent">
-    <div class="calendar-event-inner">{{displayEvent.event.time}} {{displayEvent.event.lesson}}<br>{{displayEvent.event.place}} <!--{{displayEvent.event.lecturer}}--></div>
+    <div *ngIf="!displayEvent.event.noClasses" class="calendar-event-inner">{{displayEvent.event.time}} {{displayEvent.event.lesson}}<br>{{displayEvent.event.place}} <!--{{displayEvent.event.lecturer}}--></div>
+    <div *ngIf="displayEvent.event.noClasses" class="calendar-event-inner no-classes">Dzisiaj wolne ;)</div>
   </ng-template>
 
-  <!--Tmplate do wyświetlania danych o evencie w widoku tygodnia-->
+  <!--Template do wyświetlania danych o evencie w widoku tygodnia-->
   <ng-template #WeekEventTemplate let-displayEvent="displayEvent">
     <div class="calendar-event-inner" style="font-size:8px;">{{displayEvent.event.lesson}}</div>
   </ng-template>

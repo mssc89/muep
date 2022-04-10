@@ -133,6 +133,11 @@ app.post('/api/schedule', (req, res) => {
       schedule[index].classes = classes
     });
 
+    //dodawanie brakujących dni tygodnia do tablicy
+    //na razie tylko dla studiów stacjonarnych
+    schedule.push({day:"sobota",classes:[]})
+    schedule.push({day:"niedziela",classes:[]})
+
     res.send({status:"ok",message:schedule})
   })
   .catch(function (error) {
