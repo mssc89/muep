@@ -161,10 +161,40 @@ app.post('/api/spnjo2', (req, res) => {
   .then(function (response) {
     //załaduj html usuwając nowe linie
     let $ = cheerio.load(response.data);
-    $("tbody").each(function(index, value){
-      console.log(index)
+
+    let schedule = [];
+
+    //w głównej tabeli, znajdź tabele dla kadego języka
+    $("table").find("table").each(function(index, value){
+
+      schedule.push({language:"", name:"", lecturer:"", place:"", time:"", day:""})
+
+      //i dla kadej linii z danymi, parsuj
+      $(value).find("tr").each(function(index2, value2){
+
+        let field = $(value2).find(".c").text()
+        let fieldValue = $(value2).find("td:not(.c)").text()
+
+        if(field == "Język"){
+          schedule[index].language = fieldValue
+        }
+        else if(field == "Nazwa grupy"){
+          schedule[index].name = fieldValue
+        }
+        else if(field == "Prowadzący"){
+          schedule[index].lecturer = fieldValue
+        }
+        else if(field == "Sala"){
+          schedule[index].place = fieldValue
+        }
+        else if(field == "Godziny"){
+          schedule[index].day = fieldValue.split(" ")[0]
+          schedule[index].time = fieldValue.split(" ")[1]
+        }
+      })
     })
-    res.send($('table').html())
+
+    res.send({status:"ok", message:schedule})
   })
 });
 
