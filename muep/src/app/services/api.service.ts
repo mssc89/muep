@@ -10,15 +10,15 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  rootURL = 'https://muep.app/api';
-  //rootURL = 'http://localhost:8080';
+  //rootURL = 'https://muep.app/api';
+  rootURL = 'http://localhost:8080/api';
 
   getSchedule(type: Number, department: Number, cycle: Number, year: Number, group: Number): Observable<any> {
     return this.http.post(this.rootURL + '/schedule',{ type:type, department: department, cycle:cycle, year:year, group:group });
   }
 
   getSPNJO(album: Number): Observable<any> {
-    return this.http.post(this.rootURL + '/spnjo',{ album:album });
+    return this.http.post(this.rootURL + '/spnjo2',{ album:album });
   }
 
   getDeps(type: Number): Observable<any> {

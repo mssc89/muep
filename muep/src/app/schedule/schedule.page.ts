@@ -36,8 +36,20 @@ export class SchedulePage implements OnInit {
       .subscribe((data: ApiResponse) => {
         if (data.status == 'ok') {
           this.loadEvents(data.message);
+
+          //jeśli user podał numer albumu, pobierz dane z spnjo
+          if(typeof this.scheduleData.values.album !== 'undefined'){
+            this.api
+            .getSPNJO(this.scheduleData.values.album)
+            .subscribe((data: ApiResponse) => {
+              if (data.status == 'ok') {
+                this.loadSPNJO(data.message);
+              }
+            });
+          }
         }
     });
+
   }
 
   calendar = {
@@ -68,6 +80,62 @@ export class SchedulePage implements OnInit {
       }
     }
   };
+
+  //ładowanie i konwersja danych z SPNJO
+  loadSPNJO(data){
+    let events = []; //tablica wydarzeń wstawiana do komponentu kalendarza
+    let date = new Date(); //dzisiejsza data
+
+    //parsuj dane dzień po dniu
+    //najpierw znajdź jaki to będzie dzień, aka weź datę miesiąc temu i inkrementuj tak długo az będzie sie zgadzać
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() - 31);
+
+    for (let i = 0; i <= 62; i++) {
+      //znajdź nazwę słowną dnia bo takie dane dostaniemy z API
+      let dzien = date.toLocaleDateString('pl-PL', { weekday: 'long' });
+
+      //dla kazdego dnia z API, sprawdzaj czy dzień się zgadza
+      for(let clas of data){
+        if (dzien == clas.day.toLowerCase()) {
+
+          //rozmnóz kropki
+          clas.time = clas.time.replace(".",":")
+
+          //data (godzina) początkowa zajęć
+          let start = new Date(date.getTime());
+          let hour = clas.time.split('-')[0].split(':')[0];
+          let minute = clas.time.split('-')[0].split(':')[1];
+          start.setHours(parseInt(hour));
+          start.setMinutes(parseInt(minute));
+
+          //data (godzina) końcowa zajęć
+          let end = new Date(date.getTime());
+          hour = clas.time.split('-')[1].split(':')[0];
+          minute = clas.time.split('-')[1].split(':')[1];
+          end.setHours(parseInt(hour));
+          end.setMinutes(parseInt(minute));
+
+          events.push({
+            noClasses: false,
+            time: clas.time,
+            lesson: clas.language,
+            place: clas.place,
+            lecturer: clas.lecturer,
+            title: clas.time + ' ' + clas.place + ' ' + clas.language,
+            startTime: start,
+            endTime: end,
+            allDay: false,
+          });
+        }
+      }
+      //przewiń do kolejnego dnia
+      date.setDate(date.getDate() + 1);
+    }
+
+    //połącz z istniejącą tablicą zajęć
+    this.eventSource = this.eventSource.concat(events)
+  }
 
   //ładowanie i konwersja danych
   loadEvents(data) {

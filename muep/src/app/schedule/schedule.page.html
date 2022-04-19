@@ -5,17 +5,19 @@
     </ion-buttons>
     <ion-title >Plan zajęć</ion-title>
   </ion-toolbar>
-  <ion-segment (ionChange)="changeMode($event)" value="day">
-    <ion-segment-button value="week">
-      <ion-label>Tydzień</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="day" (click)="today()">
-      <ion-label>Dziś</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <ion-toolbar>
+    <ion-segment (ionChange)="changeMode($event)" value="day">
+      <ion-segment-button value="week">
+        <ion-label>Tydzień</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="day" (click)="today()">
+        <ion-label>Dziś</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding-top">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button fill="clear" *ngIf="calendar.mode === 'day'" (click)="changeDay('prev')" [disabled]="calendar.currentDate.getDay() === 1">
