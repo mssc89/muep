@@ -154,6 +154,12 @@ export class SchedulePage implements OnInit {
       //dla kazdego dnia z API, sprawdzaj czy dzień się zgadza
       for (let day of data) {
         if (dzien == day.day.toLowerCase()) {
+
+          //jeśli uzytkownik podał nr albumu, usuń z tablicy lektoraty ogólne
+          if(typeof this.scheduleData.values.album !== 'undefined'){
+            day.classes = day.classes.filter(x => !(x.lesson.includes("(Lek)")));
+          }
+
           for (let clas of day.classes) {
             //data (godzina) początkowa zajęć
             let start = new Date(date.getTime());
