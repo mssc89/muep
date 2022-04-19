@@ -44,10 +44,17 @@
         {{ scheduleData.values.group.name }}
       </ion-label>
     </ion-item>
+    <ion-item *ngIf="scheduleData.values.album">
+      <ion-label>
+        Numer albumu:
+        <br>
+        {{ scheduleData.values.album }}
+      </ion-label>
+    </ion-item>
 
   </ion-list>
 </ion-content>
 
-<ion-footer class="ion-padding-start ion-padding-end">
+<ion-footer class="ion-padding-start ion-padding-end ion-padding-bottom">
   <ion-button expand="block" (click)="done()">Dalej</ion-button>
 </ion-footer>

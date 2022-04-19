@@ -16,6 +16,7 @@ export class SetupPage implements OnInit {
   cycle: Number;
   year: Number;
   group: Number;
+  album: Number;
 
   types: Array<any> = [
     {id:1, name:"Stacjonarne"},
@@ -79,6 +80,7 @@ export class SetupPage implements OnInit {
         cycle:{ id:this.cycle, name:this.cycles.find(x => x.id == this.cycle).name },
         year:{ id:this.year, name:this.years.find(x => x.id == this.year).name },
         group:{ id:this.group, name:this.groups.find(x => x.id == this.group).name },
+        album: this.album
       }
     )
     localStorage.setItem("schedules",JSON.stringify([schedule]))

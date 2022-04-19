@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding-start ion-padding-end">
+<ion-content class="ion-padding-start ion-padding-end ion-padding-bottom">
   <p>
     Dziękujemy za pobranie aplikacji!
   </p>
@@ -75,6 +75,15 @@
     </ion-item>
   </ion-list>
 
-  <ion-button expand="block" (click)="done()" [disabled]="!group || !year || !department || !cycle || !type">Dalej</ion-button>
+  <ion-item>
+    <ion-label position="stacked">Numer albumu (opcjonalnie)</ion-label>
+    <ion-input type="number" [(ngModel)]="album" placeholder="123456"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-note>Numer albumu jest używany w celu pobrania danych o lektoratach. Nie jest wymagany.</ion-note>
+  </ion-item>
+
+
+  <ion-button expand="block" (click)="done()" [disabled]="!group || !year || !department || !cycle || !type" class="ion-margin-top">Dalej</ion-button>
 
 </ion-content>
