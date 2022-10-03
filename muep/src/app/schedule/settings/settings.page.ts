@@ -20,6 +20,7 @@ export class SettingsPage implements OnInit {
 
   ngOnInit() {
     this.schedules = this.storage.getSchedulesData();
+    console.log(this.schedules)
   }
 
   async closeModal() {
