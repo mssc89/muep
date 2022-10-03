@@ -61,8 +61,20 @@ export class SetupPage implements OnInit {
     .subscribe((data: ApiResponse) => {
       if (data.status == 'ok') {
         //obetnij nazwy grup
+        console.log(data.message)
         for(let grupa of data.message){
-          grupa.nameShort = grupa.name.substring(grupa.name.indexOf("grupa"))
+          //znajdź index obcięcia nazwy (po "Rok I"/"Rok II" itd) - mozna regexem ale jestem leniwy
+          let index = 0;
+          if(grupa.name.includes("Rok III")){
+            index = grupa.name.indexOf("Rok III") + "Rok III ".length;
+          }
+          else if(grupa.name.includes("Rok II")){
+            index = grupa.name.indexOf("Rok II") + "Rok II ".length;
+          }
+          else{
+            index = grupa.name.indexOf("Rok I") + "Rok I ".length;
+          }
+          grupa.nameShort = grupa.name.substring(index)
         }
         this.groups = data.message;
       }
