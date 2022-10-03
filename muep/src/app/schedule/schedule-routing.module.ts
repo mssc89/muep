@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: SchedulePage
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   }
 ];
 

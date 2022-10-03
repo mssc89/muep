@@ -12,4 +12,9 @@ export class StorageService {
     let schedule = JSON.parse(localStorage.getItem("schedules"))[0];
     return new ScheduleData(schedule.name, schedule.values);
   }
+
+  getSchedulesData(){
+    let schedules = JSON.parse(localStorage.getItem("schedules"));
+    return schedules;
+  }
 }

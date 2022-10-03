@@ -4,9 +4,12 @@ import { ApiService } from '../services/api.service';
 
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { registerLocaleData } from '@angular/common';
+import { ModalController } from '@ionic/angular';
 import localePl from '@angular/common/locales/pl';
 import { ApiResponse } from '../models/response';
 import { StorageService } from '../services/storage.service';
+
+import { SettingsPage } from './settings/settings.page';
 
 registerLocaleData(localePl);
 
@@ -24,7 +27,8 @@ export class SchedulePage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
-    private storage: StorageService
+    private storage: StorageService,
+    public modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -50,6 +54,14 @@ export class SchedulePage implements OnInit {
         }
     });
 
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: SettingsPage,
+    });
+
+    return await modal.present();
   }
 
   calendar = {
@@ -133,7 +145,17 @@ export class SchedulePage implements OnInit {
       date.setDate(date.getDate() + 1);
     }
 
-    //połącz z istniejącą tablicą zajęć
+    //łączenie z istniejącą tablicą zajęć
+    for(let event of this.eventSource){
+      //jeśli istnieją juz puste elementy (aka "dzisiaj wolne") które nakładają się na lektoraty to usuń je
+      if(event.noClasses == true){
+        for(let eventSPNJO of events){
+          if(this.getDateString(event.startTime) == this.getDateString(eventSPNJO.startTime)){
+            this.eventSource = this.eventSource.filter(x => x!=event);
+          }
+        }
+      }
+    }
     this.eventSource = this.eventSource.concat(events)
   }
 
@@ -264,5 +286,10 @@ export class SchedulePage implements OnInit {
   //ustawianie limitu przewijania w widoku dniowym
   //aka user moze przewijac tylko w zakresie aktualnego tygodnia
   swipeGuard(){
+  }
+
+  //zwróć string dd/mm/yyyy z daty
+  getDateString(date: Date){
+    return date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate();
   }
 }

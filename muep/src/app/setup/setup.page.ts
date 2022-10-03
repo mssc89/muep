@@ -71,9 +71,24 @@ export class SetupPage implements OnInit {
   }
 
   done(){
+    //domyślna nazwa planu
+    //wez nazwę
+    let name = this.groups.find(x => x.id == this.group).name;
+    //podziel na słowa
+    let slowa = name.split("Rok")[0].split(" ");
+    //dla kadego słowa innego niz wymienione, wez pierwszą literę i zrób uppercase
+    for(let i=0;i<slowa.length;i++){
+      if(slowa[i] != "i" && slowa[i] != "w" && slowa[i] != "o"){
+        slowa[i] = slowa[i].charAt(0).toUpperCase();
+      }
+    };
+
+    //zmień array słów na stringa
+    name = slowa.join('') + " Rok" + name.split("Rok")[1];
+
     //podstawowa tablica z danymi planów
     let schedule = new ScheduleData(
-      "default",
+      name,
       {
         type:{ id:this.type, name:this.types.find(x => x.id == this.type).name },
         department:{ id:this.department, name:this.deps.find(x => x.id == this.department).name },
