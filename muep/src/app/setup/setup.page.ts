@@ -36,6 +36,10 @@ export class SetupPage implements OnInit {
   }
 
   updateDepsList(){
+    //wyczyść stare dane
+    this.department = null;
+
+    //pobierz nowe dane z api
     this.api
     .getDeps(this.type)
     .subscribe((data: ApiResponse) => {
@@ -46,6 +50,10 @@ export class SetupPage implements OnInit {
   }
 
   updateYearList(){
+    //wyczyść stare dane
+    this.year = null;
+
+    //pobierz nowe dane z api
     this.api
     .getYears(this.type, this.department, this.cycle)
     .subscribe((data: ApiResponse) => {
@@ -56,12 +64,15 @@ export class SetupPage implements OnInit {
   }
 
   updateGroupList(){
+    //wyczyść stare dane
+    this.group = null;
+
+    //pobierz nowe dane z api
     this.api
     .getGroups(this.type, this.department, this.cycle, this.year)
     .subscribe((data: ApiResponse) => {
       if (data.status == 'ok') {
         //obetnij nazwy grup
-        console.log(data.message)
         for(let grupa of data.message){
           //znajdź index obcięcia nazwy (po "Rok I"/"Rok II" itd) - mozna regexem ale jestem leniwy
           let index = 0;
@@ -74,6 +85,7 @@ export class SetupPage implements OnInit {
           else{
             index = grupa.name.indexOf("Rok I") + "Rok I ".length;
           }
+          //obetnij po numerze roku
           grupa.nameShort = grupa.name.substring(index)
         }
         this.groups = data.message;
