@@ -11,11 +11,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgCalendarModule } from 'ionic2-calendar';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [
-    FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgCalendarModule ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgCalendarModule
+    ],
+    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
