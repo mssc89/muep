@@ -15,7 +15,7 @@ export class DonePage implements OnInit {
   constructor(private router: Router, private storage: StorageService) { }
 
   ngOnInit() {
-    this.scheduleData = this.storage.getScheduleData();
+    this.scheduleData = this.router.getCurrentNavigation().extras.state.schedule;
   }
 
   done(){

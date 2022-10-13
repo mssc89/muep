@@ -11,6 +11,8 @@ import { StorageService } from '../services/storage.service';
 
 import { SettingsPage } from './settings/settings.page';
 
+import { ScheduleData } from '../models/schedule-data';
+
 registerLocaleData(localePl);
 
 @Component({
@@ -20,8 +22,8 @@ registerLocaleData(localePl);
 })
 export class SchedulePage implements OnInit {
 
-  scheduleData; //tablica danych do korzystania z API
-  eventSource: Array<any>; //tablica wydarzeń
+  schedules: Array<ScheduleData>; //tablica danych do korzystania z API
+  eventSource: Array<any> = []; //tablica wydarzeń
   viewTitle: String; //nagłówek z datą itd.
 
   constructor(
@@ -32,28 +34,29 @@ export class SchedulePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.scheduleData = this.storage.getScheduleData();
+    this.schedules = this.storage.getSchedules();
 
     //pobieranie danych z API
-    this.api
-      .getSchedule(this.scheduleData.values.type.id, this.scheduleData.values.department.id, this.scheduleData.values.cycle.id, this.scheduleData.values.year.id, this.scheduleData.values.group.id)
-      .subscribe((data: ApiResponse) => {
-        if (data.status == 'ok') {
-          this.loadEvents(data.message);
+    for(let schedule of this.schedules){
+      this.api
+        .getSchedule(schedule.values.type.id, schedule.values.department.id, schedule.values.cycle.id, schedule.values.year.id, schedule.values.group.id)
+        .subscribe((data: ApiResponse) => {
+          if (data.status == 'ok') {
+            this.loadEvents(data.message);
 
-          //jeśli user podał numer albumu, pobierz dane z spnjo
-          if(typeof this.scheduleData.values.album !== 'undefined'){
-            this.api
-            .getSPNJO(this.scheduleData.values.album)
-            .subscribe((data: ApiResponse) => {
-              if (data.status == 'ok') {
-                this.loadSPNJO(data.message);
-              }
-            });
+            //jeśli user podał numer albumu, pobierz dane z spnjo
+            if(typeof schedule.values.album !== 'undefined'){
+              this.api
+              .getSPNJO(schedule.values.album)
+              .subscribe((data: ApiResponse) => {
+                if (data.status == 'ok') {
+                  this.loadSPNJO(data.message);
+                }
+              });
+            }
           }
-        }
-    });
-
+      });
+    }
   }
 
   async openModal() {
@@ -178,7 +181,7 @@ export class SchedulePage implements OnInit {
         if (dzien == day.day.toLowerCase()) {
 
           //jeśli uzytkownik podał nr albumu, usuń z tablicy lektoraty ogólne
-          if(typeof this.scheduleData.values.album !== 'undefined'){
+          if(typeof this.schedules[0].values.album !== 'undefined'){
             day.classes = day.classes.filter(x => !(x.lesson.includes("(Lek)")));
           }
 
@@ -236,7 +239,7 @@ export class SchedulePage implements OnInit {
       date.setDate(date.getDate() + 1);
     }
     //na końcu wstaw tablicę sparsownych wydarzeń do komponentu
-    this.eventSource = events;
+    this.eventSource = this.eventSource.concat(events);
   }
 
   //zmiana nagłówka

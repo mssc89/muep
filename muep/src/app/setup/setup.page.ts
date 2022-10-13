@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiResponse } from '../models/response';
 import { ScheduleData } from '../models/schedule-data';
 import { ApiService } from '../services/api.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-setup',
@@ -10,6 +11,7 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./setup.page.scss'],
 })
 export class SetupPage implements OnInit {
+  context: String;
 
   type: Number;
   department: Number;
@@ -25,14 +27,17 @@ export class SetupPage implements OnInit {
   cycles: Array<any> = [
     {id:1, name:"Pierwszy stopień"},
     {id:2, name:"Drugi stopień"}
-  ]
+  ];
   deps: Array<any>;
   years: Array<any>;
   groups: Array<any>;
 
-  constructor(private api: ApiService, private router: Router) { }
+  constructor(private api: ApiService, private router: Router, private storage: StorageService) { }
 
   ngOnInit() {
+    //zdobądź aktualny kontekst (setup/edycja/dodawanie nowego)
+    this.context = this.router.url.split('/').pop();
+    console.log(this.context)
   }
 
   updateDepsList(){
@@ -100,7 +105,7 @@ export class SetupPage implements OnInit {
     let name = this.groups.find(x => x.id == this.group).name;
     //podziel na słowa
     let slowa = name.split("Rok")[0].split(" ");
-    //dla kadego słowa innego niz wymienione, wez pierwszą literę i zrób uppercase
+    //dla kazdego słowa innego niz wymienione, wez pierwszą literę i zrób uppercase
     for(let i=0;i<slowa.length;i++){
       if(slowa[i] != "i" && slowa[i] != "w" && slowa[i] != "o"){
         slowa[i] = slowa[i].charAt(0).toUpperCase();
@@ -122,8 +127,9 @@ export class SetupPage implements OnInit {
         album: this.album
       }
     )
-    localStorage.setItem("schedules",JSON.stringify([schedule]))
-    this.router.navigate(['/setup/done'])
+
+    this.storage.addSchedule(schedule);
+    this.router.navigate(['/setup/done'], {state: {schedule}});
   }
 
 }

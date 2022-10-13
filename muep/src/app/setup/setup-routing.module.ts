@@ -9,6 +9,14 @@ const routes: Routes = [
     component: SetupPage
   },
   {
+    path: 'edit',
+    component: SetupPage
+  },
+  {
+    path: 'add',
+    component: SetupPage
+  },
+  {
     path: 'done',
     loadChildren: () => import('./done/done.module').then( m => m.DonePageModule)
   },

@@ -1,15 +1,20 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Cześć!</ion-title>
+    <ion-buttons *ngIf="context==='edit' || context==='add'" slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="context==='setup'">Cześć!</ion-title>
+    <ion-title *ngIf="context==='edit'">Edytuj plan</ion-title>
+    <ion-title *ngIf="context==='add'">Dodaj nowy plan</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding-start ion-padding-end ion-padding-bottom">
-  <p>
+<ion-content class="ion-padding-start ion-padding-end ion-padding-bottom ion-padding-top">
+  <p *ngIf="context==='setup'" class="no-margin-top">
     Dziękujemy za pobranie aplikacji!
   </p>
 
-  <p>
+  <p *ngIf="context==='setup'">
     Przed wyświetleniem planu zajęć potrzebujemy kilku danych o Tobie:
   </p>
 
