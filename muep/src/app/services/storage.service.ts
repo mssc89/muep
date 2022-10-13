@@ -8,13 +8,34 @@ export class StorageService {
 
   constructor() { }
 
-  getScheduleData(){
-    let schedule = JSON.parse(localStorage.getItem("schedules"))[0];
-    return new ScheduleData(schedule.name, schedule.values);
+  getSchedules(){
+    let schedules = JSON.parse(localStorage.getItem("schedules"));
+    return <Array<ScheduleData>>schedules;
   }
 
-  getSchedulesData(){
-    let schedules = JSON.parse(localStorage.getItem("schedules"));
-    return schedules;
+  setSchedules(schedules: Array<ScheduleData>){
+    localStorage.setItem("schedules",JSON.stringify(schedules))
+  }
+
+  addSchedule(schedule: ScheduleData){
+    let schedules = this.getSchedules();
+    if(!schedules){
+      schedules = [];
+    }
+    schedules.push(schedule);
+    this.setSchedules(schedules);
+  }
+
+  removeSchedule(schedule: ScheduleData){
+    let schedules = this.getSchedules();
+    schedules = schedules.filter(x => x.name != schedule.name);
+    this.setSchedules(schedules);
+  }
+
+  isEmpty(){
+    if(!this.getSchedules() || this.getSchedules().length == 0){
+      return true;
+    }
+    return false;
   }
 }
